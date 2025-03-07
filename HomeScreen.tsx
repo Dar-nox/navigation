@@ -15,7 +15,7 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
     return null;
   }
 
-  const { addToCart } = cartContext;
+  const { cart, addToCart } = cartContext;
 
   return (
     <View style={styles.container}>
@@ -34,7 +34,11 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
           </View>
         )}
       />
-      <TouchableOpacity style={styles.cartButton} onPress={() => navigation.navigate('Cart')}>
+      <TouchableOpacity
+        style={[styles.cartButton, cart.length === 0 && styles.disabledButton]}
+        onPress={() => cart.length > 0 && navigation.navigate('Cart')}
+        disabled={cart.length === 0}
+      >
         <Text style={styles.buttonText}>Go to Cart</Text>
       </TouchableOpacity>
     </View>
@@ -83,6 +87,9 @@ const styles = StyleSheet.create({
     bottom: 20,
     left: 20,
     right: 20,
+  },
+  disabledButton: {
+    backgroundColor: '#A9A9A9',
   },
 });
 

@@ -13,7 +13,6 @@ const CartScreen = ({ navigation }: { navigation: any }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Your Cart</Text>
       <FlatList
         data={cart}
         keyExtractor={(item) => item.id}
@@ -35,7 +34,11 @@ const CartScreen = ({ navigation }: { navigation: any }) => {
           </View>
         )}
       />
-      <TouchableOpacity style={styles.checkoutButton} onPress={() => navigation.navigate('Checkout')}>
+      <TouchableOpacity
+        style={[styles.checkoutButton, cart.length === 0 && styles.disabledButton]}
+        onPress={() => cart.length > 0 && navigation.navigate('Checkout')}
+        disabled={cart.length === 0}
+      >
         <Text style={styles.buttonText}>Checkout</Text>
       </TouchableOpacity>
     </View>
@@ -109,6 +112,9 @@ const styles = StyleSheet.create({
     bottom: 20,
     left: 20,
     right: 20,
+  },
+  disabledButton: {
+    backgroundColor: '#A9A9A9',
   },
 });
 
